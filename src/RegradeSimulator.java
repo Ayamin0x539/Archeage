@@ -18,6 +18,8 @@ public class RegradeSimulator {
 
 	private Hashtable<String, RegradeLevel> regradeLevels;
 	
+	public static final String START_REGRADE_LEVEL = "unique";
+	
 	private RegradeLevel grand;
 	private RegradeLevel rare;
 	private RegradeLevel arcane;
@@ -44,7 +46,7 @@ public class RegradeSimulator {
 		regradeLevels.put("heroic", heroic);
 		regradeLevels.put("unique", unique);
 		
-		currentRegradeLevel = "rare";
+		currentRegradeLevel = START_REGRADE_LEVEL;
 	}
 	
 	public String nextStep(float success, float greatSuccess, float fail, float downgrade) {
@@ -142,13 +144,14 @@ public class RegradeSimulator {
 	}
 	
 	public void resetRegradeLevel() {
-		this.currentRegradeLevel = "rare";
+		this.currentRegradeLevel = START_REGRADE_LEVEL;
 	}
 	
 	public void averageNumberOfRegrades(int sampleCases) {
 		int totalRegrades = 0;
 		for (int i = 0; i < sampleCases; i++) {
 			totalRegrades += regradeUntilCelestial();
+			
 		}
 		System.out.println("Number of items brought from Rare to Celestial: " + sampleCases);
 		System.out.println("Number of regrades it took: " + totalRegrades);
@@ -158,13 +161,13 @@ public class RegradeSimulator {
 	public static void main(String[] args) {
 
 		RegradeSimulator rs = new RegradeSimulator();
-		
+//		rs.averageNumberOfRegrades(1);
 		Scanner scan = new Scanner(System.in);
 
 		boolean keepGoing = true;
 		
 		while(keepGoing) {
-			System.out.println("Enter the number of items you would like to bring up to Celestial from Rare: (type q to quit)");
+			System.out.println("Enter the number of items you would like to bring up to Celestial from " + START_REGRADE_LEVEL + " (type q to quit)");
 
 			String stopOrNot = scan.nextLine();
 			if(stopOrNot.equals("q")) {
